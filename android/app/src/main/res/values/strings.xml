@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">VRK Diet Reminders</string>
+    <string name="title_activity_main">VRK Diet Reminders</string>
+    <string name="package_name">com.vrk.dietapp</string>
+    <string name="custom_url_scheme">com.vrk.dietapp</string>
+</resources>

@@ -1,0 +1,17 @@
+{
+  "appId": "com.vrk.dietapp",
+  "appName": "VRK Diet Reminders",
+  "webDir": "www",
+  "platforms": {
+    "android": {
+      "presentationStyle": "modal"
+    }
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_icon_config_sample",
+      "iconColor": "#488AEA",
+      "sound": "notification"
+    }
+  },
+}

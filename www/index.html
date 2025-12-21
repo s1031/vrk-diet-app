@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VRK Diet Reminders Plan</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <div class="header-content">
+                    <h1>VRK Diet Reminders Plan</h1>
+                    <p class="subtitle">6 Pillars: Fat, Water, Lemon/C Vitamin, Multivitamin, D Vitamin, Omega 3</p>
+                </div>
+                <div class="theme-switcher">
+                    <label for="themeSelect">Theme:</label>
+                    <select id="themeSelect" class="theme-select">
+                        <option value="light">🌞 Light</option>
+                        <option value="dark">🌙 Dark</option>
+                        <option value="nature">🌿 Nature</option>
+                        <option value="ocean">🌊 Ocean</option>
+                        <option value="sunset">🌅 Sunset</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <section class="setup-section">
+            <h2>Setup Your Diet Plan</h2>
+            <div class="input-group">
+                <label for="startTime">Diet Start Time:</label>
+                <input 
+                    type="time" 
+                    id="startTime" 
+                    value="08:00"
+                    title="Set the time when you want to start your diet reminders"
+                >
+                <button id="generateBtn" class="btn-primary">Generate Plan</button>
+                <button id="resetBtn" class="btn-secondary">Reset</button>
+            </div>
+        </section>
+
+        <section class="table-section">
+            <h2>Daily Reminder Schedule</h2>
+            <div class="table-wrapper">
+                <table id="remindersTable" class="reminders-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Activity</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <p class="table-note" id="tableNote">Enter a start time and click "Generate Plan" to populate the schedule</p>
+        </section>
+
+        <section class="info-section">
+            <h2>Plan Information</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Total Reminders</h3>
+                    <p id="totalReminders">0</p>
+                </div>
+                <div class="info-card">
+                    <h3>Plan Duration</h3>
+                    <p id="planDuration">0 hours</p>
+                </div>
+                <div class="info-card">
+                    <h3>Daily Water Intake</h3>
+                    <p id="waterIntake">0 glasses</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="notifications-section">
+            <h2>Notification Preferences</h2>
+            <div class="notification-settings">
+                <div class="notification-method">
+                    <input type="checkbox" id="enablePushNotif" checked>
+                    <label for="enablePushNotif">
+                        <span class="notif-icon">🔔</span> Push Notifications
+                    </label>
+                </div>
+                <div class="notification-method">
+                    <input type="checkbox" id="enableEmailNotif">
+                    <label for="enableEmailNotif">
+                        <span class="notif-icon">📧</span> Email Notifications
+                    </label>
+                    <input 
+                        type="email" 
+                        id="emailAddress" 
+                        placeholder="Enter email address"
+                        disabled
+                    >
+                </div>
+                <div class="notification-method">
+                    <input type="checkbox" id="enableSmsNotif">
+                    <label for="enableSmsNotif">
+                        <span class="notif-icon">💬</span> SMS Notifications
+                    </label>
+                    <input 
+                        type="tel" 
+                        id="phoneNumber" 
+                        placeholder="Enter phone number"
+                        disabled
+                    >
+                </div>
+                <div class="notification-method">
+                    <input type="checkbox" id="enableAudio" checked>
+                    <label for="enableAudio">
+                        <span class="notif-icon">🔊</span> Sound Alert
+                    </label>
+                </div>
+            </div>
+            <button id="startReminderBtn" class="btn-primary" disabled>Start Reminders</button>
+            <button id="stopReminderBtn" class="btn-secondary" disabled>Stop Reminders</button>
+        </section>
+
+        <section class="tracker-section">
+            <h2>Reminder Status & History</h2>
+            <div class="tracker-content">
+                <div class="next-reminder">
+                    <h3>Next Reminder:</h3>
+                    <p id="nextReminderTime">No reminders scheduled</p>
+                    <p id="nextReminderActivity">-</p>
+                </div>
+                <div class="notifications-log">
+                    <h3>Notification History:</h3>
+                    <div id="notificationsLog" class="log-list">
+                        <p class="empty-log">No notifications sent yet</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
