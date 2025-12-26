@@ -1,20 +1,20 @@
 // Diet plan template with time offsets in minutes from start time
 const dietPlanTemplate = [
     { offset: 0, activity: 'Supplements (MV, Omega 3)', quantity: 'with 2 glass water' },
-    { offset: 1, activity: 'Fat', quantity: '20 ml with bullet proof coffee' },
-    { offset: 2, activity: 'Supplements (D vitamin, C vitamin)', quantity: 'with 2 glass water' },
-    { offset: 3, activity: 'Green tea', quantity: '1 cup' },
-    { offset: 4, activity: 'Water', quantity: '1 glass' },
-    { offset: 5, activity: 'Water', quantity: '1 glass' },
-    { offset: 6, activity: 'First meal', quantity: 'Balanced meal' },
-    { offset: 7, activity: 'Water', quantity: '1 glass' },
-    { offset: 8, activity: 'Water + Fat', quantity: '1 glass + 20 ml' },
-    { offset: 9, activity: 'Water + Green tea', quantity: '1 glass + 1 cup' },
-    { offset: 10, activity: 'Water', quantity: '1 glass' },
-    { offset: 11, activity: 'Water + Fat', quantity: '1 glass + 20 ml' },
-    { offset: 12, activity: 'Meal 2', quantity: 'Balanced meal' },
-    { offset: 13, activity: 'Water', quantity: '1 glass' },
-    { offset: 14, activity: 'Water', quantity: '1 glass' }
+    { offset: 30, activity: 'Fat', quantity: '20 ml with bullet proof coffee' },
+    { offset: 90, activity: 'Supplements (D vitamin, C vitamin)', quantity: 'with 2 glass water' },
+    { offset: 150, activity: 'Green tea', quantity: '1 cup' },
+    { offset: 210, activity: 'Water', quantity: '1 glass' },
+    { offset: 270, activity: 'Water', quantity: '1 glass' },
+    { offset: 330, activity: 'First meal', quantity: 'Balanced meal' },
+    { offset: 390, activity: 'Water', quantity: '1 glass' },
+    { offset: 450, activity: 'Water + Fat', quantity: '1 glass + 20 ml' },
+    { offset: 510, activity: 'Water + Green tea', quantity: '1 glass + 1 cup' },
+    { offset: 570, activity: 'Water', quantity: '1 glass' },
+    { offset: 630, activity: 'Water + Fat', quantity: '1 glass + 20 ml' },
+    { offset: 690, activity: 'Meal 2', quantity: 'Balanced meal' },
+    { offset: 750, activity: 'Water', quantity: '1 glass' },
+    { offset: 810, activity: 'Water', quantity: '1 glass' }
 ];
 
 // DOM Elements
