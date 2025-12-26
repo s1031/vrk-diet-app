@@ -233,20 +233,23 @@ function startReminders() {
             Notification.requestPermission().then(permission => {
                 if (permission === 'granted') {
                     console.log('Notification permission granted');
+                    registerServiceWorkerForNotifications();
+                } else if (permission === 'denied') {
+                    alert('Notifications are blocked. Please enable notifications in your Android settings.');
                 }
+            }).catch(err => {
+                console.error('Error requesting notification permission:', err);
             });
+        } else if (Notification.permission === 'granted') {
+            registerServiceWorkerForNotifications();
         } else if (Notification.permission === 'denied') {
-            alert('Notifications are blocked. Please enable notifications in your browser settings.');
+            alert('Notifications are blocked. Please enable notifications in your Android settings.');
         }
     }
 
     // Register Service Worker for background notifications
     if (enablePushNotif.checked && 'serviceWorker' in navigator) {
-        navigator.serviceWorker.ready.then(() => {
-            console.log('Service Worker ready for notifications');
-        }).catch(err => {
-            console.log('Service Worker not available:', err);
-        });
+        registerServiceWorkerForNotifications();
     }
 
     // Start checking reminders every 10 seconds
@@ -299,6 +302,77 @@ function checkReminders() {
     updateNextReminder(currentMinutes);
 }
 
+// Function to register Service Worker for notifications
+function registerServiceWorkerForNotifications() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.ready.then((registration) => {
+            console.log('Service Worker registered for notifications:', registration);
+            
+            // Subscribe to push notifications if supported
+            if ('pushManager' in registration) {
+                registration.pushManager.getSubscription().then((subscription) => {
+                    if (!subscription) {
+                        console.log('No push subscription found');
+                    } else {
+                        console.log('Already subscribed to push notifications');
+                    }
+                }).catch(err => {
+                    console.log('Error checking push subscription:', err);
+                });
+            }
+        }).catch(err => {
+            console.error('Service Worker registration error:', err);
+        });
+    }
+}
+
+// Function to send push notification via Service Worker
+function sendPushViaServiceWorker(reminder) {
+    if ('serviceWorker' in navigator && 'PushManager' in window) {
+        navigator.serviceWorker.ready.then((registration) => {
+            const notificationData = {
+                title: 'VRK Diet Reminder',
+                body: `${reminder.activity}\n${reminder.quantity}`,
+                icon: '🥗',
+                badge: '🥗',
+                tag: `reminder-${reminder.offset}`,
+                requireInteraction: true,
+                vibrate: [200, 100, 200],
+                timestamp: Date.now(),
+                silent: false
+            };
+
+            // Try to send via push manager if available
+            if (registration.pushManager) {
+                registration.pushManager.getSubscription().then((subscription) => {
+                    if (subscription) {
+                        // Has a subscription, use it
+                        console.log('Sending via push subscription');
+                    }
+                });
+            }
+        }).catch(err => {
+            console.log('Service Worker not ready:', err);
+        });
+    }
+}
+
+// Function to attach handlers to notification object
+function attachNotificationHandlers(notification) {
+    notification.onclick = () => {
+        notification.close();
+        window.focus();
+    };
+
+    notification.onclose = () => {
+        console.log('Notification closed');
+    };
+
+    notification.onerror = () => {
+        console.error('Notification error');
+    };
+}
+
 // Function to send reminder notification
 function sendReminder(reminder, index) {
     const message = `⏰ Time for: ${reminder.activity} (${reminder.quantity})`;
@@ -308,32 +382,34 @@ function sendReminder(reminder, index) {
     if (enablePushNotif.checked && 'Notification' in window && Notification.permission === 'granted') {
         const notificationOptions = {
             body: `${reminder.activity}\n${reminder.quantity}`,
-            icon: '🥗',
-            badge: '🥗',
+            icon: './icons/icon-192.png', // Use actual icon from manifest
+            badge: './icons/icon-192.png',
             tag: `reminder-${reminder.offset}`, // Prevents duplicate notifications
             requireInteraction: true, // Keeps notification visible until user interacts
-            vibrate: [200, 100, 200], // Vibration pattern
+            vibrate: [200, 100, 200], // Vibration pattern for Android
             timestamp: Date.now(),
-            silent: false // Enable sound
+            silent: false, // Enable sound
+            dir: 'auto'
         };
 
-        const notification = new Notification('VRK Diet Reminder', notificationOptions);
-
-        // Handle notification click
-        notification.onclick = () => {
-            notification.close();
-            window.focus();
-        };
-
-        // Handle notification close
-        notification.onclose = () => {
-            console.log('Notification closed for:', reminder.activity);
-        };
-
-        // Handle notification error
-        notification.onerror = () => {
-            console.error('Notification error for:', reminder.activity);
-        };
+        try {
+            // For Android PWA, use Service Worker if available
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.ready.then((registration) => {
+                    registration.showNotification('VRK Diet Reminder', notificationOptions);
+                }).catch(err => {
+                    // Fallback to standard Notification API
+                    const notification = new Notification('VRK Diet Reminder', notificationOptions);
+                    attachNotificationHandlers(notification);
+                });
+            } else {
+                // Standard Notification API fallback
+                const notification = new Notification('VRK Diet Reminder', notificationOptions);
+                attachNotificationHandlers(notification);
+            }
+        } catch (error) {
+            console.error('Notification error:', error);
+        }
     }
 
     // Email notification (simulated)
@@ -479,4 +555,7 @@ document.addEventListener('DOMContentLoaded', () => {
     startReminderBtn.disabled = true;
     stopReminderBtn.disabled = true;
 });
+
+
+
 

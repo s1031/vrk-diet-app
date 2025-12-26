@@ -146,8 +146,23 @@
 
     <script src="script.js"></script>
     <script>
+        // Register Service Worker for PWA and Android notifications
         if ("serviceWorker" in navigator) {
-         navigator.serviceWorker.register("./sw.js");
+            navigator.serviceWorker.register("./sw.js").then((registration) => {
+                console.log("Service Worker registered successfully:", registration);
+                
+                // Update the SW if a new version is available
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            console.log('New Service Worker version available');
+                        }
+                    });
+                });
+            }).catch((error) => {
+                console.error("Service Worker registration failed:", error);
+            });
         }
     </script>
 </body>

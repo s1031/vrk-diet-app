@@ -6,16 +6,42 @@
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4CAF50",
-  "icons": [
+  "orientation": "portrait-primary",
+  "screenshots": [
     {
       "src": "icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
+    }
+  ],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "icons/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["health", "lifestyle"],
+  "shortcuts": [
+    {
+      "name": "Start Diet Plan",
+      "short_name": "Diet Plan",
+      "description": "Start your VRK diet reminder plan",
+      "url": "/vrk-diet-app/?action=start",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }
